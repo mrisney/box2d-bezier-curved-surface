@@ -17,6 +17,10 @@ function init() {
     setUpCurve();
     document.addEventListener("mousedown", handleMouseDown, true);
     document.addEventListener("mouseup", handleMouseUp, true);
+    // for IOS & Android
+    document.addEventListener("touchstart",handleMouseDown, true);
+    document.addEventListener("touchend",handleMouseUp, true);
+
     window.setInterval(update, 1000 / 60);
 }
 
