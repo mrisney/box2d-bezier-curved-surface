@@ -3,6 +3,20 @@
     <head>
         <meta charset="utf-8" />
         <title>box2dweb curve</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+		<link href="verticalSlider.css" rel="stylesheet" type="text/css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+		<script src="verticalSlider.js"></script>
+        <script src="box2dweb.js"></script>
+        <script src="curve.js"></script>
+
+        <!-- http://www.aspectsnow.co.uk/ProductDisplay.aspx?Design=Sequences&ProductType=TShirt -->
+
+        <! -- http://www.elmundio.net/projects/verticalSlider/ -->
+
+
         <style>
             body {
                 background-color: #CCC;
@@ -14,8 +28,41 @@
     </head>
 
     <body onload="init()">
-        <canvas id="canvas" width="800" height="800" />
-        <script src="box2dweb.js"></script>
-        <script src="curve.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+
+$(document).on('pageinit', '.ui-page', function () {
+    $(this).find('.ui-slider').width(250);
+});
+
+
+$('body').change(function() {
+    var x = $('#slider-1').val();
+    var y = $('#slider-0').val();
+    drawCurve(x,y);
+});
+
+</script>
+       <!-- -->
+         <div data-role="page">
+
+
+
+		        <div data-role="content">
+		        <input type="range" min="0" max="100" value="0" step="1" sliderOrientation="vertical" id="slider-0"  />
+
+		       <canvas id="canvas" width="800" height="400"></canvas>
+
+
+
+        <form>
+		    <label for="slider-0">Input slider:</label>
+		    <input type="range" name="slider" id="slider-1" value="25" min="0" max="50"  />
+</form>
+
+		        </div>
+    </div>
+
+
     </body>
 </html>

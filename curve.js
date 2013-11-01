@@ -15,11 +15,11 @@ function init() {
     canvas = document.getElementById('canvas');
     context = canvas.getContext('2d');
     setUpCurve();
-    document.addEventListener("mousedown", handleMouseDown, true);
+    //document.addEventListener("mousedown", handleMouseDown, true);
     document.addEventListener("mouseup", handleMouseUp, true);
     // for IOS & Android
-    document.addEventListener("touchstart",handleMouseDown, true);
-    document.addEventListener("touchend",handleMouseUp, true);
+    //document.addEventListener("touchstart",handleMouseDown, true);
+    //document.addEventListener("touchend",handleMouseUp, true);
 
     window.setInterval(update, 1000 / 60);
 }
@@ -82,20 +82,30 @@ function draw() {
         var type = body.GetType();
         if (type == 2) {
             var radius = body.GetFixtureList().GetShape().GetRadius();
-            var x = body.GetPosition().x
-            var y = body.GetPosition().y
-			var v = body.GetLinearVelocity().y
-			v= Math.round(v * 100) / 100
 
-           var  deg = Math.atan2(x, y)/(Math.PI/180);
-        //    console.log("x = "+v);
+
+            var rotation = body.GetAngle() * (180 / Math.PI);
+			var x = body.GetWorldCenter().x * SCALE;
+		    var y = body.GetWorldCenter().y * SCALE;
+
+			var velocity = body.GetLinearVelocity().x
+			velocity= Math.round(velocity * 100) / 100
+			var direction = "right"
+			if (velocity < 0) direction = "left";
+
+			console.log("direction = "+direction);
 
             context.save();
-            context.translate(x * SCALE, y * SCALE);
-            context.rotate(body.GetAngle());
-            context.beginPath();
-            context.arc(0, 0, radius * SCALE, 0, Math.PI * 2, false);
-            context.stroke()
+            context.translate(x,y);
+            context.rotate(rotation);
+
+
+            drawing = new Image();
+			drawing.src = "ball.png";
+			context.drawImage(drawing,0,0,20,20);
+ 			//context.beginPath();
+           // context.arc(0, 0, radius * SCALE, 0, Math.PI * 2, false);
+           // context.stroke()
             context.restore();
         } else if (type == 0) {
             var fixture = body.GetFixtureList();
@@ -163,10 +173,10 @@ function update() {
 }
 
 
-function handleMouseDown(e) {
+function drawCurve(x,y) {
     isMouseDown = true;
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    mouseX = x*SCALE;
+    mouseY = y*SCALE;
     setUpCurve();
 }
 
